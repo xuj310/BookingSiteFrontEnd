@@ -1,0 +1,9 @@
+import Button from 'react-bootstrap/Button';
+import React from 'react';
+
+export default function GoHomeButton({goHome}) {
+
+    return (
+        <Button className="headerItem" onClick={goHome} variant="outline-light">Home</Button>
+    );
+  }
