@@ -1,10 +1,8 @@
 import { useState, Fragment } from "react";
 import Container from "react-bootstrap/Container";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
