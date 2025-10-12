@@ -1,5 +1,6 @@
-import { useState, Fragment } from "react";
+import { useState, Fragment, useRef } from "react";
 import Container from "react-bootstrap/Container";
+import Floater from "react-floater";
 
 const RegisterPage = () => {
   const [name, setName] = useState("");
@@ -8,23 +9,32 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [age, setAge] = useState("");
   const [role, setRole] = useState("");
+  const [errors, setErrors] = useState([]);
+  const formRef = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrors([]);
 
     try {
       const res = await fetch("http://localhost:5000/api/users", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, phoneNum, email, password, age, role }),
       });
 
       const data = await res.text();
-      console.log("Response:", data);
+      const parsed = JSON.parse(data);
+
+      if (parsed.errors != null) {
+        setErrors(parsed.errors);
+      } else {
+        sessionStorage.setItem("token", parsed.token);
+        window.location.href = "/";
+      }
     } catch (err) {
       console.error("Error:", err);
+      setErrors(["Something went wrong. Please try again."]);
     }
   };
 
@@ -32,7 +42,7 @@ const RegisterPage = () => {
     <Fragment>
       <Container>
         <div className="cardAlignment">
-          <div className="welcome-box">
+          <div className="welcome-box" ref={formRef}>
             <h3 className="text-center mb-4">Register</h3>
             <form onSubmit={handleSubmit}>
               <label htmlFor="name" className="form-label">
@@ -42,7 +52,6 @@ const RegisterPage = () => {
                 type="text"
                 className="form-control"
                 id="name"
-                placeholder="Enter name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
@@ -54,7 +63,6 @@ const RegisterPage = () => {
                 type="tel"
                 className="form-control"
                 id="phoneNum"
-                placeholder="Enter phone number"
                 value={phoneNum}
                 onChange={(e) => setPhoneNum(e.target.value)}
               />
@@ -66,7 +74,6 @@ const RegisterPage = () => {
                 type="email"
                 className="form-control"
                 id="email"
-                placeholder="Enter email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -78,7 +85,6 @@ const RegisterPage = () => {
                 type="password"
                 className="form-control"
                 id="password"
-                placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -90,7 +96,6 @@ const RegisterPage = () => {
                 type="number"
                 className="form-control"
                 id="age"
-                placeholder="Enter age"
                 value={age}
                 onChange={(e) => setAge(e.target.value)}
               />
@@ -115,6 +120,26 @@ const RegisterPage = () => {
             </form>
           </div>
         </div>
+
+        {errors.length > 0 && (
+          <Floater
+            open={true}
+            content={
+              <ul style={{ margin: 0, paddingLeft: "1rem" }}>
+                {errors.map((err, i) => (
+                  <li key={i}>{err}</li>
+                ))}
+              </ul>
+            }
+            placement="right"
+            target={formRef.current}
+            styles={{
+              options: {
+                zIndex: 1000,
+              },
+            }}
+          />
+        )}
       </Container>
     </Fragment>
   );
