@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Fragment } from "react";
 import Container from "react-bootstrap/Container";
 import { toast } from "react-toastify";
 import Floater from "react-floater";
 
-export default function SearchPage({ query, setQuery, fetchEvents }) {
+export default function AllEventsPage({ fetchEvents }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleKeyPress = (event) => {
@@ -15,16 +15,12 @@ export default function SearchPage({ query, setQuery, fetchEvents }) {
     }
   };
 
-  useEffect(() => {
-    setQuery("");
-  }, [setQuery]);
-
   return (
     <Fragment>
       <Container>
         <div className="cardAlignment">
           <div className="welcome-box">
-            <h3 className="text-center mb-4">Search Event</h3>
+            <h3 className="text-center mb-4">all Events</h3>
             <Floater
               open={isOpen}
               content="React Floater here!"
@@ -39,9 +35,7 @@ export default function SearchPage({ query, setQuery, fetchEvents }) {
                 className="search"
                 type="text"
                 placeholder="Hit Enter to send..."
-                value={query}
                 onKeyDown={handleKeyPress}
-                onChange={(e) => setQuery(e.target.value)}
                 onFocus={() => setIsOpen(true)}
                 onBlur={() => setIsOpen(false)}
               />

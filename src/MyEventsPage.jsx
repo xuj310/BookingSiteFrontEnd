@@ -8,13 +8,13 @@ const items = [
   { id: 3, title: "Competitive Watching Paint Dry @ Lilydale", img: "https://sxcu.net/7kw4ILQyy.png" },
 ];
 
-const FrontPage = () => {
+const MyEventsPage = () => {
   return (
     <Fragment>
       <Container>
         <div className="cardAlignment">
           <div className="welcome-box">
-            <h3>My Bookings</h3>
+            <h3>My Events</h3>
             <div className="listContainer">
               {items.map((item) => (
                 <Row key={item.id} className="listRow">
@@ -34,4 +34,4 @@ const FrontPage = () => {
   );
 };
 
-export default FrontPage;
+export default MyEventsPage;

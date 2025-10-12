@@ -7,24 +7,20 @@ import FrontPage from "./FrontPage.jsx";
 import MyEvents from "./MyEventsPage.jsx";
 import LoginPage from "./LoginPage.jsx";
 import RegisterPage from "./RegisterPage.jsx";
-import SearchPage from "./SearchPage.jsx";
+import AllEventsPage from "./AllEventsPage.jsx";
 import GoHomeButton from "./components/layout/GoHomeButton.jsx";
 import LogoIcon from "./components/layout/LogoIcon.jsx";
 import MyEventsButton from "./components/layout/MyEventsButton.jsx";
-import SearchButton from "./components/layout/SearchButton.jsx";
+import AllEventsButton from "./components/layout/AllEventsButton.jsx";
 import LoginButton from "./components/layout/LoginButton.jsx";
 import RegisterButton from "./components/layout/RegisterButton.jsx";
 import { ToastContainer } from "react-toastify";
 
 function App() {
-  const [query, setQuery] = useState("");
-
   const navigate = useNavigate();
 
-  async function fetchEvents() {}
-
-  function goSearch() {
-    navigate("/search");
+  function goAllEvents() {
+    navigate("/events");
   }
 
   function goHome() {
@@ -51,7 +47,10 @@ function App() {
               <GoHomeButton className="headerItem" goHome={goHome} />
               <LoginButton className="headerItem" goLogin={goLogin} />
               <RegisterButton className="headerItem" goRegister={goRegister} />
-              <SearchButton className="headerItem" goSearch={goSearch} />
+              <AllEventsButton
+                className="headerItem"
+                goAllEvents={goAllEvents}
+              />
               <MyEventsButton className="headerItem" goMyEvents={goMyEvents} />
             </div>
           </Nav>
@@ -73,14 +72,8 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route
-          path="/search"
-          element={
-            <SearchPage
-              query={query}
-              setQuery={setQuery}
-              fetchEvents={fetchEvents}
-            />
-          }
+          path="/events"
+          element={<AllEventsPage goAllEvents={goAllEvents} />}
         />
         <Route path="/" element={<FrontPage />} />
         <Route path="/myevents" element={<MyEvents />} />
