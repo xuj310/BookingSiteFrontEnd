@@ -1,45 +1,44 @@
-import React, { useState } from "react";
 import { Fragment } from "react";
 import Container from "react-bootstrap/Container";
-import { toast } from "react-toastify";
-import Floater from "react-floater";
+import { Row, Col, Image } from "react-bootstrap";
 
-export default function AllEventsPage({ fetchEvents }) {
-  const [isOpen, setIsOpen] = useState(false);
+const items = [
+  {
+    id: 1,
+    title: "Table Tennis @ Collingwood",
+    img: "https://sxcu.net/7kw4ILQyy.png",
+  },
+  {
+    id: 2,
+    title: "Dog Walk & Coffee Meet @ Box Hill",
+    img: "https://sxcu.net/7kw4ILQyy.png",
+  },
+  {
+    id: 3,
+    title: "Competitive Watching Paint Dry @ Lilydale",
+    img: "https://sxcu.net/7kw4ILQyy.png",
+  },
+];
 
-  const handleKeyPress = (event) => {
-    if (event.key === "Enter") {
-      toast("React-Tostify has been triggered");
-      console.log("Enter pressed!");
-      fetchEvents();
-    }
-  };
-
+export default function AllEventsPage() {
   return (
     <Fragment>
       <Container>
         <div className="cardAlignment">
           <div className="welcome-box">
-            <h3 className="text-center mb-4">all Events</h3>
-            <Floater
-              open={isOpen}
-              content="React Floater here!"
-              placement="top"
-              styles={{
-                options: {
-                  zIndex: 1000,
-                },
-              }}
-            >
-              <input
-                className="search"
-                type="text"
-                placeholder="Hit Enter to send..."
-                onKeyDown={handleKeyPress}
-                onFocus={() => setIsOpen(true)}
-                onBlur={() => setIsOpen(false)}
-              />
-            </Floater>
+            <h3>Events</h3>
+            <div className="listContainer">
+              {items.map((item) => (
+                <Row key={item.id} className="listRow">
+                  <Col xs={3}>
+                    <Image src={item.img} fluid rounded />
+                  </Col>
+                  <Col xs={9} className="titleCol">
+                    <h5>{item.title}</h5>
+                  </Col>
+                </Row>
+              ))}
+            </div>
           </div>
         </div>
       </Container>

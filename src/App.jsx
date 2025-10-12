@@ -8,10 +8,12 @@ import MyEvents from "./MyEventsPage.jsx";
 import LoginPage from "./LoginPage.jsx";
 import RegisterPage from "./RegisterPage.jsx";
 import AllEventsPage from "./AllEventsPage.jsx";
+import CreateEventPage from "./CreateEventPage.jsx";
 import GoHomeButton from "./components/layout/GoHomeButton.jsx";
 import LogoIcon from "./components/layout/LogoIcon.jsx";
 import MyEventsButton from "./components/layout/MyEventsButton.jsx";
 import AllEventsButton from "./components/layout/AllEventsButton.jsx";
+import AddEventButton from "./components/layout/AddEventButton.jsx";
 import LoginButton from "./components/layout/LoginButton.jsx";
 import RegisterButton from "./components/layout/RegisterButton.jsx";
 import { ToastContainer } from "react-toastify";
@@ -22,13 +24,16 @@ function App() {
   function goAllEvents() {
     navigate("/events");
   }
+  function goCreateEvent() {
+    navigate("/createEvent");
+  }
 
   function goHome() {
     navigate("/");
   }
 
   function goMyEvents() {
-    navigate("/myevents");
+    navigate("/myEvents");
   }
 
   function goLogin() {
@@ -47,6 +52,10 @@ function App() {
               <GoHomeButton className="headerItem" goHome={goHome} />
               <LoginButton className="headerItem" goLogin={goLogin} />
               <RegisterButton className="headerItem" goRegister={goRegister} />
+              <AddEventButton
+                className="headerItem"
+                goCreateEvent={goCreateEvent}
+              />
               <AllEventsButton
                 className="headerItem"
                 goAllEvents={goAllEvents}
@@ -69,14 +78,12 @@ function App() {
         theme="dark"
       />
       <Routes>
+        <Route path="/createEvent" element={<CreateEventPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route
-          path="/events"
-          element={<AllEventsPage goAllEvents={goAllEvents} />}
-        />
+        <Route path="/events" element={<AllEventsPage />} />
         <Route path="/" element={<FrontPage />} />
-        <Route path="/myevents" element={<MyEvents />} />
+        <Route path="/myEvents" element={<MyEvents />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

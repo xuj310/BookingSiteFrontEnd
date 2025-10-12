@@ -3,9 +3,21 @@ import Container from "react-bootstrap/Container";
 import { Row, Col, Image } from "react-bootstrap";
 
 const items = [
-  { id: 1, title: "Table Tennis @ Collingwood", img: "https://sxcu.net/7kw4ILQyy.png" },
-  { id: 2, title: "Dog Walk & Coffee Meet @ Box Hill", img: "https://sxcu.net/7kw4ILQyy.png" },
-  { id: 3, title: "Competitive Watching Paint Dry @ Lilydale", img: "https://sxcu.net/7kw4ILQyy.png" },
+  {
+    id: 1,
+    title: "Table Tennis @ Collingwood",
+    img: "https://sxcu.net/7kw4ILQyy.png",
+  },
+  {
+    id: 2,
+    title: "Dog Walk & Coffee Meet @ Box Hill",
+    img: "https://sxcu.net/7kw4ILQyy.png",
+  },
+  {
+    id: 3,
+    title: "Competitive Watching Paint Dry @ Lilydale",
+    img: "https://sxcu.net/7kw4ILQyy.png",
+  },
 ];
 
 const MyEventsPage = () => {

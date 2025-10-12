@@ -3,6 +3,6 @@ import React from 'react';
 
 export default function AllEventsPage({ goAllEvents }) {
     return (
-        <Button className="headerItem" variant="outline-light" onClick={goAllEvents}>All Events</Button>
+        <Button className="headerItem" variant="outline-light" onClick={goAllEvents}>Events</Button>
     );
   }
