@@ -1,8 +1,10 @@
 import { useState, Fragment } from "react";
 import Container from "react-bootstrap/Container";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -33,6 +35,7 @@ const LoginPage = () => {
       else {
         toast(parsed.message);
         sessionStorage.setItem("token", parsed.token);
+        window.location.href = "/";
       }
     } catch (err) {
       console.error("Error:", err);
@@ -46,7 +49,7 @@ const LoginPage = () => {
       <Container>
         <div className="cardAlignment">
           <div className="welcome-box">
-            <h3 className="text-center mb-4">Register</h3>
+            <h3 className="text-center mb-4">Login</h3>
             <form onSubmit={handleSubmit}>
               <label htmlFor="email" className="form-label">
                 Email address
