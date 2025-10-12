@@ -1,5 +1,6 @@
 import { useState, Fragment } from "react";
 import Container from "react-bootstrap/Container";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -7,6 +8,14 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let parsed;
+
+    const existingToken = sessionStorage.getItem("token");
+    if (existingToken) {
+      toast("Already logged in");
+      console.log("Token exists:", existingToken);
+      return; 
+    }
 
     try {
       const res = await fetch("http://localhost:5000/api/users/login", {
@@ -18,9 +27,17 @@ const LoginPage = () => {
       });
 
       const data = await res.text();
-      console.log("Response:", data);
+      const parsed = JSON.parse(data);
+
+      if (parsed.errors != null) parsed.errors.forEach((err) => toast(err));
+      else {
+        toast(parsed.message);
+        sessionStorage.setItem("token", parsed.token);
+      }
     } catch (err) {
       console.error("Error:", err);
+      toast(parsed.errors);
+      console.log("Error message:", parsed.errors);
     }
   };
 

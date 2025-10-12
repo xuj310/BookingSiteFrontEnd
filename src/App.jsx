@@ -14,6 +14,7 @@ import MyEventsButton from "./components/layout/MyEventsButton.jsx";
 import SearchButton from "./components/layout/SearchButton.jsx";
 import LoginButton from "./components/layout/LoginButton.jsx";
 import RegisterButton from "./components/layout/RegisterButton.jsx";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const [query, setQuery] = useState("");
@@ -56,6 +57,18 @@ function App() {
           </Nav>
         </Container>
       </Navbar>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />

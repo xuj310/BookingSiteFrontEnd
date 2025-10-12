@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Fragment } from "react";
 import Container from "react-bootstrap/Container";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import Floater from "react-floater";
 
 export default function SearchPage({ query, setQuery, fetchEvents }) {
@@ -44,18 +44,6 @@ export default function SearchPage({ query, setQuery, fetchEvents }) {
                 onChange={(e) => setQuery(e.target.value)}
                 onFocus={() => setIsOpen(true)}
                 onBlur={() => setIsOpen(false)}
-              />
-              <ToastContainer
-                position="bottom-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick={false}
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="dark"
               />
             </Floater>
           </div>
