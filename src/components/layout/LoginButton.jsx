@@ -17,6 +17,7 @@ export default function LoginButton({ goLogin }) {
       sessionStorage.removeItem("token");
       setIsLoggedIn(false);
       toast("Logged out");
+      window.location.href = "/";
     } else {
       goLogin();
     }
