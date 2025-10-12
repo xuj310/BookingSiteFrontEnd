@@ -1,6 +1,7 @@
 import { useState, Fragment, useRef } from "react";
 import Container from "react-bootstrap/Container";
 import Floater from "react-floater";
+import { toast } from "react-toastify";
 
 const RegisterPage = () => {
   const [name, setName] = useState("");
@@ -8,7 +9,6 @@ const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [age, setAge] = useState("");
-  const [role, setRole] = useState("");
   const [errors, setErrors] = useState([]);
   const formRef = useRef(null);
 
@@ -20,7 +20,7 @@ const RegisterPage = () => {
       const res = await fetch("http://localhost:5000/api/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, phoneNum, email, password, age, role }),
+        body: JSON.stringify({ name, phoneNum, email, password, age }),
       });
 
       const data = await res.text();
@@ -29,6 +29,7 @@ const RegisterPage = () => {
       if (parsed.errors != null) {
         setErrors(parsed.errors);
       } else {
+        toast(parsed.message);
         sessionStorage.setItem("token", parsed.token);
         window.location.href = "/";
       }
@@ -99,20 +100,6 @@ const RegisterPage = () => {
                 value={age}
                 onChange={(e) => setAge(e.target.value)}
               />
-
-              <label htmlFor="role" className="form-label">
-                Role
-              </label>
-              <select
-                className="form-select"
-                id="role"
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-              >
-                <option value="">Select role</option>
-                <option value="user">User</option>
-                <option value="admin">Admin</option>
-              </select>
 
               <button type="submit" className="btn btn-primary mt-3">
                 Register
