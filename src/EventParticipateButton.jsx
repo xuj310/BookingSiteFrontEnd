@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
+import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 export default function EventParticipateButton({ participants, eventId }) {
   const [buttonText, setButtonText] = useState("Join");
@@ -49,17 +51,16 @@ export default function EventParticipateButton({ participants, eventId }) {
       );
 
       const result = await res.json();
-      alert(result.message);
-      window.location.href = "/events";
+
+      if (res.status === 400) {
+        toast(result.message);
+      } else {
+        window.location.href = "/events";
+      }
     } catch (err) {
       console.error("Error:", err);
-      alert("Something went wrong.");
     }
   };
 
-  return (
-    <button onClick={handleClick}>
-      {buttonText}
-    </button>
-  );
+  return <button onClick={handleClick}>{buttonText}</button>;
 }
