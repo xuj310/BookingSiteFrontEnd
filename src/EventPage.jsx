@@ -32,18 +32,27 @@ const EventPage = () => {
       <Container>
         <div className="cardAlignment">
           <div className="card">
-            {error ? (
-              <h3>{error}</h3>
-            ) : item ? (
+            {error && <h3>{error}</h3>}
+
+            {!error && item && (
               <li>
                 <img src={item.imgUrl} alt={item.title} />
                 <h3>{item.title}</h3>
                 <p>Date: {new Date(item.date).toLocaleDateString("en-AU")}</p>
                 <p>{item.description}</p>
+
+                <div>
+                  <h4>Participants:</h4>
+                  <ul>
+                    {item.participants.map(function (participant) {
+                      return <li key={participant.id}>{participant.name}</li>;
+                    })}
+                  </ul>
+                </div>
               </li>
-            ) : (
-              <h3>Loading event...</h3>
             )}
+
+            {!error && !item && <h3>Loading event...</h3>}
           </div>
         </div>
       </Container>

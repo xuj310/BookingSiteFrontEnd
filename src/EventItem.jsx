@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import EventParticipateButton from "./EventParticipateButton.jsx";
+import DeleteEventButton from "./DeleteEventButton.jsx";
 
 const EventRow = ({ item }) => {
   const navigate = useNavigate();
@@ -26,6 +27,10 @@ const EventRow = ({ item }) => {
           <p>Date: {readableDate}</p>
           <EventParticipateButton
             participants={item.participants}
+            eventId={item._id}
+            className="eventParticipateButton"
+          />
+          <DeleteEventButton
             eventId={item._id}
             className="eventParticipateButton"
           />
