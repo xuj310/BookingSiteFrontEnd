@@ -1,4 +1,4 @@
-import { useState, Fragment } from "react";
+import { useState, Fragment, useRef } from "react";
 import Container from "react-bootstrap/Container";
 import { toast } from "react-toastify";
 import Floater from "react-floater";
@@ -6,8 +6,9 @@ import Floater from "react-floater";
 const LoginPage = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [date, setDate] = useState(0);
+  const [date, setDate] = useState(null);
   const [errors, setErrors] = useState([]);
+  const formRef = useRef(null);
 
   const handleDateChange = (date) => {
     const selectedDate = new Date(date.target.value);
@@ -54,7 +55,7 @@ const LoginPage = () => {
     <Fragment>
       <Container>
         <div className="cardAlignment">
-          <div className="welcome-box">
+          <div className="welcome-box" ref={formRef} >
             <h3 className="text-center mb-4">Create Event</h3>
             <h4 className="text-center mb-4">
               You will automatically be added as the first participant
