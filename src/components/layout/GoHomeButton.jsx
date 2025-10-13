@@ -1,6 +1,9 @@
 import Button from 'react-bootstrap/Button';
-import React from 'react';
 
+/*
+  Button for going back to the home page
+  goHome - Navigate to the correct page
+ */
 export default function GoHomeButton({goHome}) {
 
     return (

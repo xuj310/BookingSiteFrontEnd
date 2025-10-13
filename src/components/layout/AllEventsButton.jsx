@@ -1,5 +1,10 @@
 import Button from "react-bootstrap/Button";
-export default function AllEventsPage({ goAllEvents }) {
+
+/*
+  Button for going to all events page
+  goAllEvents - Navigate to the correct page
+ */
+export default function AllEventsButton({ goAllEvents }) {
   return (
     <Button
       className="headerItem"
