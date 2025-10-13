@@ -1,6 +1,8 @@
 import { useState, useEffect, Fragment } from "react";
 import Container from "react-bootstrap/Container";
 import { Row, Col, Image } from "react-bootstrap";
+import { jwtDecode } from "jwt-decode";
+
 
 const MyEventsPage = () => {
   const [items, setItems] = useState([]);
@@ -8,19 +10,32 @@ const MyEventsPage = () => {
 
   const getEvents = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/events", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const token = sessionStorage.getItem("token");
+
+      if (!token) {
+        setErrors(["No auth token found."]);
+        return;
+      }
+
+      const decoded = jwtDecode(token);
+      const userId = decoded._id;
+
+      const res = await fetch(
+        `http://localhost:5000/api/events?userid=${userId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json"
+          },
+        }
+      );
 
       const data = await res.json();
 
       if (data.errors) {
         setErrors(data.errors);
       } else {
-        setItems(data); // assuming data is an array of event objects
+        setItems(data);
       }
     } catch (err) {
       console.error("Error fetching events:", err);
@@ -49,7 +64,7 @@ const MyEventsPage = () => {
             )}
             <div className="listContainer">
               {items.map((item) => (
-                <Row key={item.id} className="listRow">
+                <Row key={item._id} className="listRow">
                   <Col xs={3}>
                     <Image src={item.img} fluid rounded />
                   </Col>
@@ -60,7 +75,12 @@ const MyEventsPage = () => {
                     {item.participants && item.participants.length > 0 && (
                       <p>
                         <strong>Participants:</strong>{" "}
-                        {item.participants.join(", ")}
+                        {item.participants.map((p, index) => (
+                          <span key={p.id}>
+                            {p.name}
+                            {index < item.participants.length - 1 ? ", " : ""}
+                          </span>
+                        ))}
                       </p>
                     )}
                   </Col>

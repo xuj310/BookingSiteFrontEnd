@@ -49,7 +49,7 @@ const AllEventsPage = () => {
             )}
             <div className="listContainer">
               {items.map((item) => (
-                <Row key={item.id} className="listRow">
+                <Row key={item._id} className="listRow">
                   <Col xs={3}>
                     <Image src={item.img} fluid rounded />
                   </Col>
@@ -60,7 +60,12 @@ const AllEventsPage = () => {
                     {item.participants && item.participants.length > 0 && (
                       <p>
                         <strong>Participants:</strong>{" "}
-                        {item.participants.join(", ")}
+                        {item.participants.map((p, index) => (
+                          <span key={p.id}>
+                            {p.name}
+                            {index < item.participants.length - 1 ? ", " : ""}
+                          </span>
+                        ))}
                       </p>
                     )}
                   </Col>
