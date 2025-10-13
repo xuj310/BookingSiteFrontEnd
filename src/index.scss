@@ -82,6 +82,27 @@
     }
   }
 
+  .eventItem {
+    li {
+      display: grid;
+      grid-template-columns: 10rem 1fr;
+      grid-template-rows: auto auto;
+      align-items: center;
+      padding: 1rem 2rem;
+      column-gap: 2rem;
+      font-size: 1.4rem;
+      border-bottom: 1px solid colours.$hovor-colour;
+
+      .event-image {
+        width: 100%;
+        aspect-ratio: 5 / 4;
+        background-size: cover;
+        background-position: center;
+        border-radius: 0.5rem;
+      }
+    }
+  }
+
   .list {
     padding: 1rem;
     li:hover {

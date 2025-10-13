@@ -1,6 +1,6 @@
 import { useState, useEffect, Fragment } from "react";
 import Container from "react-bootstrap/Container";
-import { Row, Col, Image } from "react-bootstrap";
+import EventItem from "./EventItem";
 
 const AllEventsPage = () => {
   const [items, setItems] = useState([]);
@@ -48,29 +48,11 @@ const AllEventsPage = () => {
               </div>
             )}
             <div className="listContainer">
-              {items.map((item) => (
-                <Row key={item._id} className="listRow">
-                  <Col xs={3}>
-                    <Image src={item.img} fluid rounded />
-                  </Col>
-                  <Col xs={9} className="titleCol">
-                    <h5>{item.title}</h5>
-                    <h5>{item.description}</h5>
-                    <h5>{item.date}</h5>
-                    {item.participants && item.participants.length > 0 && (
-                      <p>
-                        <strong>Participants:</strong>{" "}
-                        {item.participants.map((p, index) => (
-                          <span key={p.id}>
-                            {p.name}
-                            {index < item.participants.length - 1 ? ", " : ""}
-                          </span>
-                        ))}
-                      </p>
-                    )}
-                  </Col>
-                </Row>
-              ))}
+              <ul>
+                {items.map((item) => (
+                  <EventItem key={item._id} item={item} />
+                ))}
+              </ul>
             </div>
           </div>
         </div>

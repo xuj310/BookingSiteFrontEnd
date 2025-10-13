@@ -1,8 +1,7 @@
 import { useState, useEffect, Fragment } from "react";
 import Container from "react-bootstrap/Container";
-import { Row, Col, Image } from "react-bootstrap";
 import { jwtDecode } from "jwt-decode";
-
+import EventItem from "./EventItem";
 
 const MyEventsPage = () => {
   const [items, setItems] = useState([]);
@@ -25,7 +24,7 @@ const MyEventsPage = () => {
         {
           method: "GET",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           },
         }
       );
@@ -52,7 +51,7 @@ const MyEventsPage = () => {
       <Container>
         <div className="cardAlignment">
           <div className="welcome-box">
-            <h3>Events</h3>
+            <h3>My Events</h3>
             {errors.length > 0 && (
               <div className="error-box">
                 {errors.map((err, idx) => (
@@ -63,29 +62,11 @@ const MyEventsPage = () => {
               </div>
             )}
             <div className="listContainer">
-              {items.map((item) => (
-                <Row key={item._id} className="listRow">
-                  <Col xs={3}>
-                    <Image src={item.img} fluid rounded />
-                  </Col>
-                  <Col xs={9} className="titleCol">
-                    <h5>{item.title}</h5>
-                    <h5>{item.description}</h5>
-                    <h5>{item.date}</h5>
-                    {item.participants && item.participants.length > 0 && (
-                      <p>
-                        <strong>Participants:</strong>{" "}
-                        {item.participants.map((p, index) => (
-                          <span key={p.id}>
-                            {p.name}
-                            {index < item.participants.length - 1 ? ", " : ""}
-                          </span>
-                        ))}
-                      </p>
-                    )}
-                  </Col>
-                </Row>
-              ))}
+              <ul>
+                {items.map((item) => (
+                  <EventItem key={item._id} item={item} />
+                ))}
+              </ul>
             </div>
           </div>
         </div>

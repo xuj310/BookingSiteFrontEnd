@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import Floater from "react-floater";
 
 const LoginPage = () => {
+  const [imgUrl, setImgUrl] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState(null);
@@ -32,7 +33,7 @@ const LoginPage = () => {
           "Content-Type": "application/json",
           Authorization: "Bearer " + sessionStorage.getItem("token"),
         },
-        body: JSON.stringify({ title, description, date }),
+        body: JSON.stringify({ imgUrl, title, description, date }),
       });
 
       const data = await res.text();
@@ -55,12 +56,23 @@ const LoginPage = () => {
     <Fragment>
       <Container>
         <div className="cardAlignment">
-          <div className="welcome-box" ref={formRef} >
+          <div className="welcome-box" ref={formRef}>
             <h3 className="text-center mb-4">Create Event</h3>
             <h4 className="text-center mb-4">
               You will automatically be added as the first participant
             </h4>
             <form onSubmit={handleSubmit}>
+              <label htmlFor="image" className="form-label">
+                Image
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="imgUrl"
+                placeholder="Enter an image url"
+                value={imgUrl}
+                onChange={(e) => setImgUrl(e.target.value)}
+              />
               <label htmlFor="title" className="form-label">
                 Title
               </label>
