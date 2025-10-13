@@ -2,13 +2,13 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import NotFound from "./NotFound";
 import { Navbar, Nav } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
-import { useState } from "react";
 import FrontPage from "./FrontPage.jsx";
 import MyEvents from "./MyEventsPage.jsx";
 import LoginPage from "./LoginPage.jsx";
 import RegisterPage from "./RegisterPage.jsx";
 import AllEventsPage from "./AllEventsPage.jsx";
 import CreateEventPage from "./CreateEventPage.jsx";
+import EventPage from "./EventPage.jsx";
 import GoHomeButton from "./components/layout/GoHomeButton.jsx";
 import LogoIcon from "./components/layout/LogoIcon.jsx";
 import MyEventsButton from "./components/layout/MyEventsButton.jsx";
@@ -82,6 +82,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/events" element={<AllEventsPage />} />
+        <Route path="/events/:id" element={<EventPage />} /> 
         <Route path="/" element={<FrontPage />} />
         <Route path="/myEvents" element={<MyEvents />} />
         <Route path="*" element={<NotFound />} />
