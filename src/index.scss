@@ -132,11 +132,11 @@
     grid-row: 1 / -1;
   }
 
-  .list {
-    grid-column: 3; /* Ensures it sits below the title */
+  .list .eventParticipateButton {
+    grid-column: 3;  /* Ensures it sits below the title */
     align-self: center; /* Centers it vertically */
     justify-self: start; /* Ensures it aligns left with text */
-    padding: 0.5rem;
+    padding: 0.1rem;
   }
 
   .list h3 {

@@ -1,12 +1,26 @@
+import EventParticipateButton from "./EventParticipateButton.jsx";
+
 const EventRow = ({ item }) => {
+  const readableDate = new Date(item.date).toLocaleDateString("en-AU", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
   return (
     <div className="eventItem">
       <li>
         <img src={item.imgUrl} className="event-image" />
         <div className="infoRow">
-          <h3>{item.title}</h3>
-          <p>Date: {item.date}</p>
+          <h2>{item.title}</h2>
+          <p>Date: {readableDate}</p>
+          <EventParticipateButton
+          participants={item.participants}
+          className="eventParticipateButton"
+        />
         </div>
+
+        
       </li>
     </div>
   );
