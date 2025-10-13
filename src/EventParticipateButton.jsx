@@ -1,48 +1,65 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import Button from "react-bootstrap/Button";
 
-export default function EventParticipateButton({ participants }) {
+export default function EventParticipateButton({ participants, eventId }) {
   const [buttonText, setButtonText] = useState("Join");
-  const [errors, setErrors] = useState([]);
-  const navigate = useNavigate();
+  const [currentUserId, setCurrentUserId] = useState("");
 
   useEffect(() => {
-    try {
-      const token = sessionStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
+    if (!token) return;
 
-      if (!token) {
-        setErrors(["No auth token found."]);
-        return;
+    const decoded = jwtDecode(token);
+    const userId = decoded._id;
+    setCurrentUserId(userId);
+
+    let found = false;
+    for (let i = 0; i < participants.length; i++) {
+      if (participants[i].id === userId) {
+        found = true;
+        break;
       }
-
-      const decoded = jwtDecode(token);
-      const userId = decoded._id;
-
-      for (let i = 0; i < participants.length; i++) {
-        if (participants[i].id === userId) {
-          setButtonText("Leave");
-          return;
-        }
-      }
-    } catch (err) {
-      console.error("Error decoding token:", err);
-      setErrors(["Failed to decode token."]);
     }
+
+    setButtonText(found ? "Leave" : "Join");
   }, [participants]);
 
-  const HandleParticipation = () => {
-    // Add your join/leave logic here
+  const handleClick = async () => {
+    let found = false;
+    for (let i = 0; i < participants.length; i++) {
+      if (participants[i].id === currentUserId) {
+        found = true;
+        break;
+      }
+    }
+
+    const action = found ? "removeid" : "addid";
+
+    try {
+      const res = await fetch(
+        `http://localhost:5000/api/events/participants?id=${eventId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + sessionStorage.getItem("token"),
+          },
+          body: JSON.stringify({ [action]: currentUserId }),
+        }
+      );
+
+      const result = await res.json();
+      alert(result.message);
+      window.location.href = "/events";
+    } catch (err) {
+      console.error("Error:", err);
+      alert("Something went wrong.");
+    }
   };
 
   return (
-    <Button
-      className="headerItem"
-      onClick={HandleParticipation}
-      variant="outline-light"
-    >
+    <button onClick={handleClick}>
       {buttonText}
-    </Button>
+    </button>
   );
 }

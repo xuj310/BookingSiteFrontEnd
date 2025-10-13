@@ -15,7 +15,7 @@ const EventRow = ({ item }) => {
           <h2>{item.title}</h2>
           <p>Date: {readableDate}</p>
           <EventParticipateButton
-          participants={item.participants}
+          participants={item.participants} eventId={item._id}
           className="eventParticipateButton"
         />
         </div>
