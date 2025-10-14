@@ -8,6 +8,7 @@ import LoginPage from "./LoginPage.jsx";
 import RegisterPage from "./RegisterPage.jsx";
 import AllEventsPage from "./AllEventsPage.jsx";
 import EditEventPage from "./EditEventPage.jsx";
+import EditProfilePage from "./EditProfilePage.jsx";
 import CreateEventPage from "./CreateEventPage.jsx";
 import EventPage from "./EventPage.jsx";
 import GoHomeButton from "./components/layout/GoHomeButton.jsx";
@@ -16,6 +17,7 @@ import MyEventsButton from "./components/layout/MyEventsButton.jsx";
 import AllEventsButton from "./components/layout/AllEventsButton.jsx";
 import AddEventButton from "./components/layout/AddEventButton.jsx";
 import LoginButton from "./components/layout/LoginButton.jsx";
+import MyProfileButton from "./components/layout/MyProfileButton.jsx";
 import RegisterButton from "./components/layout/RegisterButton.jsx";
 import { ToastContainer } from "react-toastify";
 
@@ -28,6 +30,10 @@ function App() {
   }
   function goCreateEvent() {
     navigate("/createEvent");
+  }
+
+  function goMyProfile() {
+    navigate("/profile");
   }
 
   function goHome() {
@@ -63,6 +69,10 @@ function App() {
                 goAllEvents={goAllEvents}
               />
               <MyEventsButton className="headerItem" goMyEvents={goMyEvents} />
+              <MyProfileButton
+                className="headerItem"
+                goMyProfile={goMyProfile}
+              />
             </div>
           </Nav>
         </Container>
@@ -85,9 +95,10 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/events" element={<AllEventsPage />} />
         <Route path="/events/edit/:id" element={<EditEventPage />} />
-        <Route path="/events/:id" element={<EventPage />} /> 
+        <Route path="/events/:id" element={<EventPage />} />
         <Route path="/" element={<FrontPage />} />
         <Route path="/myEvents" element={<MyEvents />} />
+        <Route path="/profile" element={<EditProfilePage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
