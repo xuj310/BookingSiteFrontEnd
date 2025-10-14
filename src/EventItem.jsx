@@ -1,9 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import EventParticipateButton from "./EventParticipateButton.jsx";
+import EditEventButton from "./EditEventButton.jsx";
 import DeleteEventButton from "./DeleteEventButton.jsx";
+import { jwtDecode } from "jwt-decode";
 
 const EventRow = ({ item }) => {
   const navigate = useNavigate();
+
+  const token = sessionStorage.getItem("token");
+  const currentUserId = token ? jwtDecode(token)._id : null;
 
   // Human readable date
   const readableDate = new Date(item.date).toLocaleDateString("en-AU", {
@@ -29,12 +34,14 @@ const EventRow = ({ item }) => {
           <EventParticipateButton
             participants={item.participants}
             eventId={item._id}
-            className="eventParticipateButton"
+            className="eventButton"
           />
-          <DeleteEventButton
-            eventId={item._id}
-            className="eventParticipateButton"
-          />
+          {currentUserId === item.host && (
+            <>
+              <EditEventButton eventId={item._id} className="eventButton" />
+              <DeleteEventButton eventId={item._id} className="eventButton" />
+            </>
+          )}
         </div>
       </li>
     </div>

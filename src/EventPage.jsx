@@ -13,21 +13,22 @@ const EventPage = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/events?id=${id}`);
+        const res = await fetch(`http://localhost:5000/api/events?id=${id}`, {
+          method: "GET",
+        });
         const data = await res.json();
-
-        // Human readable date
-        setDate(
-          new Date(item.date).toLocaleDateString("en-AU", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })
-        );
 
         if (data.errors) {
           setError(data.errors);
         } else {
+          // Human readable date
+          setDate(
+            new Date(data.date).toLocaleDateString("en-AU", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })
+          );
           setItem(data);
         }
       } catch (err) {

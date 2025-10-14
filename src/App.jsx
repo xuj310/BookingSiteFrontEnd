@@ -7,6 +7,7 @@ import MyEvents from "./MyEventsPage.jsx";
 import LoginPage from "./LoginPage.jsx";
 import RegisterPage from "./RegisterPage.jsx";
 import AllEventsPage from "./AllEventsPage.jsx";
+import EditEventPage from "./EditEventPage.jsx";
 import CreateEventPage from "./CreateEventPage.jsx";
 import EventPage from "./EventPage.jsx";
 import GoHomeButton from "./components/layout/GoHomeButton.jsx";
@@ -83,6 +84,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/events" element={<AllEventsPage />} />
+        <Route path="/events/edit/:id" element={<EditEventPage />} />
         <Route path="/events/:id" element={<EventPage />} /> 
         <Route path="/" element={<FrontPage />} />
         <Route path="/myEvents" element={<MyEvents />} />
