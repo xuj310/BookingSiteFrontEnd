@@ -5,6 +5,7 @@ import DeleteEventButton from "./DeleteEventButton.jsx";
 const EventRow = ({ item }) => {
   const navigate = useNavigate();
 
+  // Human readable date
   const readableDate = new Date(item.date).toLocaleDateString("en-AU", {
     year: "numeric",
     month: "long",
@@ -12,7 +13,7 @@ const EventRow = ({ item }) => {
   });
 
   const goToEventPage = (e) => {
-    // Only trigger if the click is NOT on a button
+    // Only trigger going to an event page if the click is NOT on a button
     if (e.target.tagName !== "BUTTON") {
       navigate(`/events/${item._id}`);
     }

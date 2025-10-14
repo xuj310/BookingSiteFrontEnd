@@ -1,4 +1,3 @@
-import { StrictMode } from 'react'
 import './index.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App.jsx'

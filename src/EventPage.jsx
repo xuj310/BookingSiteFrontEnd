@@ -3,18 +3,30 @@ import { useParams } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 
 const EventPage = () => {
-  const { id } = useParams(); // Get event ID from URL
+  // Get event Id from URL
+  const { id } = useParams();
   const [item, setItem] = useState(null);
   const [error, setError] = useState("");
+  const [date, setDate] = useState(null);
 
+  // Call the API to get the specific event
   useEffect(() => {
     const fetchEvent = async () => {
       try {
         const res = await fetch(`http://localhost:5000/api/events?id=${id}`);
         const data = await res.json();
 
-        if (data.message) {
-          setError(data.message);
+        // Human readable date
+        setDate(
+          new Date(item.date).toLocaleDateString("en-AU", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })
+        );
+
+        if (data.errors) {
+          setError(data.errors);
         } else {
           setItem(data);
         }
@@ -32,13 +44,14 @@ const EventPage = () => {
       <Container>
         <div className="cardAlignment">
           <div className="card">
+            {/* If there's an error then just display the error, otherwise display the item */}
             {error && <h3>{error}</h3>}
 
             {!error && item && (
               <li>
                 <img src={item.imgUrl} alt={item.title} />
                 <h3>{item.title}</h3>
-                <p>Date: {new Date(item.date).toLocaleDateString("en-AU")}</p>
+                <p>Date: {date}</p>
                 <p>{item.description}</p>
 
                 <div>
@@ -52,6 +65,7 @@ const EventPage = () => {
               </li>
             )}
 
+            {/* If there's no error or item then we just wait */}
             {!error && !item && <h3>Loading event...</h3>}
           </div>
         </div>

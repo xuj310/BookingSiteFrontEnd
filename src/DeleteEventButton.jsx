@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 
 export default function DeleteEvent({ eventId }) {
+  // Handle deleting the event
   const handleClick = async () => {
     try {
       const res = await fetch(
@@ -16,9 +17,8 @@ export default function DeleteEvent({ eventId }) {
 
       const result = await res.json();
 
-      if (res.status === 400) {
-        toast(result.message);
-      } else if (res.status === 403) {
+      // If there's an issue then display a toast with the problem. Otherwise go to events to refresh the events.
+      if (res.status === 400 || res.status === 403) {
         toast(result.message);
       } else {
         window.location.href = "/events";

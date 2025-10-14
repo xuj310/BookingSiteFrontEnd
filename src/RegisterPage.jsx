@@ -13,6 +13,7 @@ const RegisterPage = () => {
   const formRef = useRef(null);
 
   const handleSubmit = async (e) => {
+    // Prevents default form behaviour
     e.preventDefault();
     setErrors([]);
 
@@ -26,6 +27,7 @@ const RegisterPage = () => {
       const data = await res.text();
       const parsed = JSON.parse(data);
 
+      // If registration was successful then notify the user and set the recieved auth token. Then go back to the home page
       if (parsed.errors != null) {
         setErrors(parsed.errors);
       } else {
@@ -38,6 +40,28 @@ const RegisterPage = () => {
       setErrors(["Something went wrong. Please try again."]);
     }
   };
+
+  let errorFloater = null;
+
+  // Show a floater with the errors
+  if (errors.length > 0) {
+    errorFloater = (
+      <Floater
+        open
+        content={
+          <ul style={{ margin: 0, paddingLeft: "1rem" }}>
+            {errors.map((error, i) => (
+              <li key={i}>{error}</li>
+            ))}
+          </ul>
+        }
+        placement="right"
+        // Make it so the floater appears in the form section
+        target={formRef.current}
+        styles={{ options: { zIndex: 1000 } }}
+      />
+    );
+  }
 
   return (
     <Fragment>
@@ -105,28 +129,9 @@ const RegisterPage = () => {
                 Register
               </button>
             </form>
+            {errorFloater}
           </div>
         </div>
-
-        {errors.length > 0 && (
-          <Floater
-            open={true}
-            content={
-              <ul style={{ margin: 0, paddingLeft: "1rem" }}>
-                {errors.map((err, i) => (
-                  <li key={i}>{err}</li>
-                ))}
-              </ul>
-            }
-            placement="right"
-            target={formRef.current}
-            styles={{
-              options: {
-                zIndex: 1000,
-              },
-            }}
-          />
-        )}
       </Container>
     </Fragment>
   );

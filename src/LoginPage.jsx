@@ -6,6 +6,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // Attempt to login
   const handleSubmit = async (e) => {
     e.preventDefault();
     let parsed;
@@ -13,7 +14,6 @@ const LoginPage = () => {
     const existingToken = sessionStorage.getItem("token");
     if (existingToken) {
       toast("Already logged in");
-      console.log("Token exists:", existingToken);
       return; 
     }
 
@@ -29,6 +29,7 @@ const LoginPage = () => {
       const data = await res.text();
       const parsed = JSON.parse(data);
 
+      // Display all errors, otherwise just display that it was successful and store the auth token. Then we go back to the home page
       if (parsed.errors != null) parsed.errors.forEach((err) => toast(err));
       else {
         toast(parsed.message);
@@ -38,7 +39,6 @@ const LoginPage = () => {
     } catch (err) {
       console.error("Error:", err);
       toast(parsed.errors);
-      console.log("Error message:", parsed.errors);
     }
   };
 

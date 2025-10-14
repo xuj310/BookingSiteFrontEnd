@@ -21,6 +21,7 @@ import { ToastContainer } from "react-toastify";
 function App() {
   const navigate = useNavigate();
 
+  // Go to different pages. Call this from the buttons
   function goAllEvents() {
     navigate("/events");
   }

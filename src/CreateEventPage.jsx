@@ -3,7 +3,7 @@ import Container from "react-bootstrap/Container";
 import { toast } from "react-toastify";
 import Floater from "react-floater";
 
-const LoginPage = () => {
+const CreateEventPage = () => {
   const [imgUrl, setImgUrl] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -11,21 +11,45 @@ const LoginPage = () => {
   const [errors, setErrors] = useState([]);
   const formRef = useRef(null);
 
+  // Convert to Epoch time
   const handleDateChange = (date) => {
     const selectedDate = new Date(date.target.value);
-    setDate(selectedDate.getTime()); // Epoch time in milliseconds
+    setDate(selectedDate.getTime());
   };
 
+  let errorFloater = null;
+
+  // Show a floater with the errors 
+  if (errors.length > 0) {
+    errorFloater = (
+      <Floater
+        open
+        content={
+          <ul style={{ margin: 0, paddingLeft: "1rem" }}>
+            {errors.map((error, i) => (
+              <li key={i}>{error}</li>
+            ))}
+          </ul>
+        }
+        placement="right"
+        // Make it so the floater appears in the form section
+        target={formRef.current}
+        styles={{ options: { zIndex: 1000 } }}
+      />
+    );
+  }
+
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     let parsed;
 
-    const existingToken = sessionStorage.getItem("token");
-    if (!existingToken) {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
       toast("Not logged in");
-      // return;
     }
 
+    // Create an event
     try {
       const res = await fetch("http://localhost:5000/api/events", {
         method: "POST",
@@ -39,6 +63,7 @@ const LoginPage = () => {
       const data = await res.text();
       const parsed = JSON.parse(data);
 
+      // If there's errors, pick them up. Otherwise display a toast and return to the events page.
       if (parsed.errors != null) {
         setErrors(parsed.errors);
       } else {
@@ -48,7 +73,6 @@ const LoginPage = () => {
     } catch (err) {
       console.error("Error:", err);
       toast(parsed.errors);
-      console.log("Error message:", parsed.errors);
     }
   };
 
@@ -57,14 +81,10 @@ const LoginPage = () => {
       <Container>
         <div className="cardAlignment">
           <div className="welcome-box" ref={formRef}>
-            <h3 className="text-center mb-4">Create Event</h3>
-            <h4 className="text-center mb-4">
-              You will automatically be added as the first participant
-            </h4>
+            <h3>Create Event</h3>
+            <h4>You will automatically be added as the first participant</h4>
             <form onSubmit={handleSubmit}>
-              <label htmlFor="image" className="form-label">
-                Image
-              </label>
+              <label className="form-label">Image</label>
               <input
                 type="text"
                 className="form-control"
@@ -73,9 +93,7 @@ const LoginPage = () => {
                 value={imgUrl}
                 onChange={(e) => setImgUrl(e.target.value)}
               />
-              <label htmlFor="title" className="form-label">
-                Title
-              </label>
+              <label className="form-label">Title</label>
               <input
                 type="text"
                 className="form-control"
@@ -85,9 +103,7 @@ const LoginPage = () => {
                 onChange={(e) => setTitle(e.target.value)}
               />
 
-              <label htmlFor="description" className="form-label">
-                Description
-              </label>
+              <label className="form-label">Description</label>
               <textarea
                 className="form-control"
                 id="description"
@@ -96,9 +112,7 @@ const LoginPage = () => {
                 onChange={(e) => setDescription(e.target.value)}
                 rows={4}
               />
-              <label htmlFor="date" className="form-label">
-                Select a date
-              </label>
+              <label className="form-label">Select a date</label>
               <input
                 type="date"
                 className="form-control"
@@ -109,31 +123,12 @@ const LoginPage = () => {
                 Create Event
               </button>
             </form>
+            {errorFloater}
           </div>
         </div>
-
-        {errors.length > 0 && (
-          <Floater
-            open={true}
-            content={
-              <ul style={{ margin: 0, paddingLeft: "1rem" }}>
-                {errors.map((err, i) => (
-                  <li key={i}>{err}</li>
-                ))}
-              </ul>
-            }
-            placement="right"
-            target={formRef.current}
-            styles={{
-              options: {
-                zIndex: 1000,
-              },
-            }}
-          />
-        )}
       </Container>
     </Fragment>
   );
 };
 
-export default LoginPage;
+export default CreateEventPage;

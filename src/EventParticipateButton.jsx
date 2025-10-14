@@ -1,13 +1,20 @@
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { toast } from "react-toastify";
-import { ToastContainer } from "react-toastify";
 
+/* 
+  Button for joining/leaving an event
+  participants - an array of participants
+  eventId - the Id for the event
+*/
 export default function EventParticipateButton({ participants, eventId }) {
+  // Default button text
   const [buttonText, setButtonText] = useState("Join");
   const [currentUserId, setCurrentUserId] = useState("");
 
+  // Check for how we should display the buttons
   useEffect(() => {
+    // Check for auth token and obtain who the current user id is
     const token = sessionStorage.getItem("token");
     if (!token) return;
 
@@ -15,6 +22,7 @@ export default function EventParticipateButton({ participants, eventId }) {
     const userId = decoded._id;
     setCurrentUserId(userId);
 
+    // Check the participants list to see if the current user id exists. If it does that means the user is participating so we change the text to "Leave"
     let found = false;
     for (let i = 0; i < participants.length; i++) {
       if (participants[i].id === userId) {
@@ -26,7 +34,9 @@ export default function EventParticipateButton({ participants, eventId }) {
     setButtonText(found ? "Leave" : "Join");
   }, [participants]);
 
+  // Handle user wanting to Leave/Join an event
   const handleClick = async () => {
+    // Check if the user is a participant
     let found = false;
     for (let i = 0; i < participants.length; i++) {
       if (participants[i].id === currentUserId) {
@@ -34,7 +44,7 @@ export default function EventParticipateButton({ participants, eventId }) {
         break;
       }
     }
-
+    // If they are a participant and they clicked, that means they want to leave. So we use removeid
     const action = found ? "removeid" : "addid";
 
     try {

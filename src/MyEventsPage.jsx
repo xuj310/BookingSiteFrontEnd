@@ -2,6 +2,7 @@ import { useState, useEffect, Fragment } from "react";
 import Container from "react-bootstrap/Container";
 import { jwtDecode } from "jwt-decode";
 import EventItem from "./EventItem";
+import { toast } from "react-toastify";
 
 const MyEventsPage = () => {
   const [items, setItems] = useState([]);
@@ -12,7 +13,7 @@ const MyEventsPage = () => {
       const token = sessionStorage.getItem("token");
 
       if (!token) {
-        setErrors(["No auth token found."]);
+        toast("Not logged in");
         return;
       }
 
