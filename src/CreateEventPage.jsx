@@ -1,7 +1,9 @@
-import { useState, Fragment, useRef } from "react";
+import { useState, Fragment, useRef, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import { toast } from "react-toastify";
 import Floater from "react-floater";
+import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const CreateEventPage = () => {
   const [imgUrl, setImgUrl] = useState("");
@@ -11,6 +13,34 @@ const CreateEventPage = () => {
   const [errors, setErrors] = useState([]);
   const formRef = useRef(null);
 
+  const navigate = useNavigate();
+
+  // Protection for user manually navigating here
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+
+    if (!token) {
+      toast("You must be logged in to create an event");
+      navigate("/");
+      return;
+    }
+
+    try {
+      const payload = jwtDecode(token);
+       // Current time in seconds
+      const now = Math.floor(Date.now() / 1000);
+
+      if (!payload.exp || payload.exp < now) {
+        toast("Session expired. Please log in again.");
+        navigate("/");
+      }
+    } catch (err) {
+      console.error("Invalid token:", err);
+      toast("Invalid session. Please log in.");
+      navigate("/");
+    }
+  }, [navigate]);
+
   // Convert to Epoch time
   const handleDateChange = (date) => {
     const selectedDate = new Date(date.target.value);
@@ -19,7 +49,7 @@ const CreateEventPage = () => {
 
   let errorFloater = null;
 
-  // Show a floater with the errors 
+  // Show a floater with the errors
   if (errors.length > 0) {
     errorFloater = (
       <Floater

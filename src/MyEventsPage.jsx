@@ -3,23 +3,42 @@ import Container from "react-bootstrap/Container";
 import { jwtDecode } from "jwt-decode";
 import EventItem from "./EventItem";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const MyEventsPage = () => {
   const [items, setItems] = useState([]);
   const [errors, setErrors] = useState([]);
+  const navigate = useNavigate();
 
   const getEvents = async () => {
-    try {
-      const token = sessionStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
 
-      if (!token) {
-        toast("Not logged in");
+    if (!token) {
+      toast("You must be logged in");
+      navigate("/");
+      return;
+    }
+
+    let decoded;
+    try {
+      decoded = jwtDecode(token);
+      const now = Math.floor(Date.now() / 1000);
+
+      if (!decoded.exp || decoded.exp < now) {
+        toast("Session expired. Please log in again.");
+        navigate("/");
         return;
       }
+    } catch (err) {
+      console.error("Invalid token:", err);
+      toast("Invalid session. Please log in.");
+      navigate("/");
+      return;
+    }
 
-      const decoded = jwtDecode(token);
-      const userId = decoded._id;
+    const userId = decoded._id;
 
+    try {
       const res = await fetch(
         `http://localhost:5000/api/events?userid=${userId}`,
         {
