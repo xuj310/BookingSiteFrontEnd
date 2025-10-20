@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import { toast } from "react-toastify";
 /* 
    Button for going to the Login page
    goLogin - Go to the login page
@@ -19,7 +18,6 @@ export default function LoginButton({ goLogin }) {
     if (isLoggedIn) {
       sessionStorage.removeItem("token");
       setIsLoggedIn(false);
-      toast("Logged out");
       window.location.href = "/";
     } else {
       goLogin();
