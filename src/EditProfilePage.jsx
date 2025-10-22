@@ -44,7 +44,7 @@ const EditProfilePage = () => {
         setPhoneNum(data.phoneNum || "");
         setAge(data.age || "");
       } catch (err) {
-        console.error("Failed to fetch event:", err);
+        console.error("Failed to fetch user:", err);
       }
     };
 
@@ -83,7 +83,7 @@ const EditProfilePage = () => {
       toast("Not logged in");
     }
 
-    // Edit an event
+    // Edit the user
     try {
       const res = await fetch(`http://localhost:5000/api/users?id=${Id}`, {
         method: "PUT",
@@ -97,7 +97,7 @@ const EditProfilePage = () => {
       const data = await res.text();
       const parsed = JSON.parse(data);
 
-      // If there's errors, pick them up. Otherwise display a toast and return to the events page.
+      // If there's errors, pick them up. Otherwise display a toast and return to the home page.
       if (parsed.errors != null) {
         setErrors(parsed.errors);
       } else {

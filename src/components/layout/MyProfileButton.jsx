@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 
 /* 
-   Button for going to the My Events page
-   goMyEvents - Go to the my events page
+   Button for going to the My Profile page
+   goMyProfile - Go to the my Profile page
 */
 export default function MyProfileButton({ goMyProfile }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
