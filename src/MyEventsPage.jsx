@@ -40,7 +40,7 @@ const MyEventsPage = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/events?userid=${userId}`,
+        `/api/events?userid=${userId}`,
         {
           method: "GET",
           headers: {

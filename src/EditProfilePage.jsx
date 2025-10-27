@@ -30,7 +30,7 @@ const EditProfilePage = () => {
 
       try {
         const res = await fetch(
-          `http://localhost:5000/api/users?id=${decoded._id}`,
+          `/api/users?id=${decoded._id}`,
           {
             method: "GET",
             headers: {
@@ -85,7 +85,7 @@ const EditProfilePage = () => {
 
     // Edit the user
     try {
-      const res = await fetch(`http://localhost:5000/api/users?id=${Id}`, {
+      const res = await fetch(`/api/users?id=${Id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

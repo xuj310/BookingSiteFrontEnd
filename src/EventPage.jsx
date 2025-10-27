@@ -13,7 +13,7 @@ const EventPage = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/events?id=${id}`, {
+        const res = await fetch(`/api/events?id=${id}`, {
           method: "GET",
         });
         const data = await res.json();

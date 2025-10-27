@@ -49,7 +49,7 @@ export default function EventParticipateButton({ participants, eventId }) {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/events/participants?id=${eventId}`,
+        `/api/events/participants?id=${eventId}`,
         {
           method: "PUT",
           headers: {

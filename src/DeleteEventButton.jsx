@@ -5,7 +5,7 @@ export default function DeleteEvent({ eventId }) {
   const handleClick = async () => {
     try {
       const res = await fetch(
-        `http://localhost:5000/api/events?id=${eventId}`,
+        `/api/events?id=${eventId}`,
         {
           method: "DELETE",
           headers: {

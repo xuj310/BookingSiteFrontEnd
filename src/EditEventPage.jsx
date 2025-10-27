@@ -21,7 +21,7 @@ const EditEventPage = () => {
       if (!token) return;
 
       try {
-        const res = await fetch(`http://localhost:5000/api/events?id=${id}`, {
+        const res = await fetch(`/api/events?id=${id}`, {
           headers: {
             Authorization: "Bearer " + token,
           },
@@ -81,7 +81,7 @@ const EditEventPage = () => {
 
     // Edit an event
     try {
-      const res = await fetch(`http://localhost:5000/api/events?id=${id}`, {
+      const res = await fetch(`/api/events?id=${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
