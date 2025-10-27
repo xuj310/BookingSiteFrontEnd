@@ -11,14 +11,14 @@ import EditEventPage from "./EditEventPage.jsx";
 import EditProfilePage from "./EditProfilePage.jsx";
 import CreateEventPage from "./CreateEventPage.jsx";
 import EventPage from "./EventPage.jsx";
-import GoHomeButton from "./components/layout/GoHomeButton.jsx";
+import GoHomeButton from "./components/Buttons/GoHomeButton.jsx";
 import LogoIcon from "./components/layout/LogoIcon.jsx";
-import MyEventsButton from "./components/layout/MyEventsButton.jsx";
-import AllEventsButton from "./components/layout/AllEventsButton.jsx";
-import AddEventButton from "./components/layout/AddEventButton.jsx";
-import LoginButton from "./components/layout/LoginButton.jsx";
-import MyProfileButton from "./components/layout/MyProfileButton.jsx";
-import RegisterButton from "./components/layout/RegisterButton.jsx";
+import MyEventsButton from "./components/Buttons/MyEventsButton.jsx";
+import AllEventsButton from "./components/Buttons/AllEventsButton.jsx";
+import AddEventButton from "./components/Buttons/AddEventButton.jsx";
+import LoginButton from "./components/Buttons/LoginButton.jsx";
+import MyProfileButton from "./components/Buttons/MyProfileButton.jsx";
+import RegisterButton from "./components/Buttons/RegisterButton.jsx";
 import { ToastContainer } from "react-toastify";
 
 function App() {

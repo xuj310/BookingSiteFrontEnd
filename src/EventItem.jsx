@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import EventParticipateButton from "./EventParticipateButton.jsx";
-import EditEventButton from "./EditEventButton.jsx";
-import DeleteEventButton from "./DeleteEventButton.jsx";
+import EventParticipateButton from "./components/Buttons/EventParticipateButton.jsx";
+import EditEventButton from "./components/Buttons/EditEventButton.jsx";
+import DeleteEventButton from "./components/Buttons/DeleteEventButton.jsx";
 import { jwtDecode } from "jwt-decode";
 
 const EventRow = ({ item }) => {
